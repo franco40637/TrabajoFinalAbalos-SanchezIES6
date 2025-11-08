@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-TrabajofinalabalosSanchezies6Application<trabajofinalabalos-sanchezies6>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "ies6.perico.trabajofinalabalos_sanchezies6.TrabajofinalabalosSanchezies6Application",
+            "projectName": "trabajofinalabalos-sanchezies6",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

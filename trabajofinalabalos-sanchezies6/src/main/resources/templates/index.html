@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inicio - RUBEN</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background-color: #fff;
+      color: #000;
+    }
+
+    /* Sección hero tipo Uber */
+    .hero {
+      padding: 100px 20px;
+    }
+
+    .hero h1 {
+      font-weight: 700;
+      font-size: 3rem;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: #333;
+    }
+
+    .discount {
+      color: #0a7a0a;
+      font-weight: 600;
+    }
+
+    .input-box {
+      background-color: #f6f6f6;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-box input {
+      border: none;
+      background: transparent;
+      flex: 1;
+      padding-left: 10px;
+      outline: none;
+    }
+
+    .mock-map {
+      background: #f1f3f4;
+      border-radius: 15px;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #666;
+      font-size: 1.1rem;
+    }
+
+    /* Sección de opciones */
+    .info-section {
+      background-color: #fff;
+      padding: 80px 20px;
+    }
+
+    .info-section h2 {
+      font-weight: 700;
+      margin-bottom: 40px;
+    }
+
+    .info-section img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    /* Sección QR y logo */
+    .app-section {
+      background-color: #f8f9fa;
+      padding: 80px 20px;
+    }
+
+    .qr-box, .logo-box {
+      background-color: #fff;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    /* Footer */
+    footer {
+      background-color: #000;
+      color: #bbb;
+      padding: 50px 0 20px;
+      font-size: 0.9rem;
+    }
+
+    footer a {
+      color: #bbb;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 🔹 Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold" href="/">RUBEN</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link active" href="/">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Usuarios</a></li>
+          <li class="nav-item"><a class="nav-link" href="/vehiculo">vehiculos</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Conductores</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Viajes</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 🔹 Hero tipo Uber -->
+  <section class="hero container">
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <h1>Comenzá a viajar con RUBEN</h1>
+        <p>Viajes confiables en minutos.</p>
+        <p class="discount"><i class="bi bi-tag-fill"></i> Disfrutá un 40% de descuento en tu primer viaje.<br>
+          <small class="text-muted">*Se aplican términos y condiciones.</small></p>
+
+        <div class="d-flex gap-3 mb-3">
+          <div class="text-center">
+            <i class="bi bi-car-front fs-3"></i>
+            <div>Viajá</div>
+          </div>
+          <div class="text-center text-muted">
+            <i class="bi bi-box fs-3"></i>
+            <div>Socio de la app</div>
+          </div>
+        </div>
+
+        <div class="input-box">
+          <i class="bi bi-circle-fill me-2"></i>
+          <input type="text" placeholder="Punto de partida" disabled>
+          <i class="bi bi-send-fill"></i>
+        </div>
+
+        <div class="input-box">
+          <i class="bi bi-square-fill me-2"></i>
+          <input type="text" placeholder="Entrega" disabled>
+        </div>
+
+        <div class="d-flex gap-2 mt-3">
+          <button class="btn btn-dark btn-lg" disabled>Ver precios</button>
+          <button class="btn btn-light btn-lg" disabled>Programar para más tarde</button>
+        </div>
+      </div>
+
+      <div class="col-md-6 mt-5 mt-md-0">
+        <div class="mock-map p-0 overflow-hidden">
+  <img src="https://mts1.google.com/vt/lyrs=m@206000000&hl=en&src=app&x=1307&y=2334&z=12&s=Ga" 
+       alt="Mapa ilustrativo" 
+       style="width:100%; height:100%; object-fit:cover; border-radius:15px;">
+</div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 🔹 Sección intermedia (opciones de viaje) -->
+  <section class="info-section container text-center">
+    <h2>Usá la app de RUBEN a tu manera</h2>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=800&q=80" alt="Auto">
+        <h5 class="mt-3 fw-bold">Opciones de viaje</h5>
+        <p>Con la app de RUBEN tendrás varias alternativas para moverte.</p>
+      </div>
+      <div class="col-md-4">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReDVyU4lSM-tBoaeYSmapS1J3QsjlN1ZLkIQ&s" alt="Aeropuerto">
+        <h5 class="mt-3 fw-bold">Más de 700 aeropuertos</h5>
+        <p>Podés solicitar un viaje desde o hacia los principales aeropuertos.</p>
+      </div>
+      <div class="col-md-4">
+        <img src="https://images.unsplash.com/photo-1531973968078-9bb02785f13d?auto=format&fit=crop&w=800&q=80" alt="Ciudades">
+        <h5 class="mt-3 fw-bold">Más de 10.000 ciudades</h5>
+        <p>RUBEN está disponible en miles de ciudades de todo el mundo.</p>
+      </div>
+    </div>
+  </section>
+
+  <!--🔹 Sección QR y logo -->
+<section class="app-section container text-center">
+  <h3 class="fw-bold mb-5">Hacé más en la app</h3>
+  <div class="row justify-content-center gx-5 gy-4">
+    <div class="col-md-5">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://rubenapp.com" 
+           alt="QR RUBEN" class="mb-4">
+      <h5 class="fw-bold">Descargá la app de RUBEN</h5>
+      <p>Escaneá para descargar</p>
+    </div>
+    <div class="col-md-5">
+      <img src="https://previews.123rf.com/images/pleasantmode/pleasantmode2311/pleasantmode231107767/218653533-reuben-male-name-black-modern-calligraphy-handwritten-lettering-text-image.jpg" 
+           alt="Logo RUBEN" class="img-fluid mb-4" style="max-width:150px;">
+      <h5 class="fw-bold">Registrate para viajar</h5>
+      <p>Unite a RUBEN y empezá tus viajes hoy mismo.</p>
+    </div>
+  </div>
+</section>
+
+
+  <!-- 🔹 Footer -->
+  <footer>
+    <div class="container">
+      <div class="row text-start">
+        <div class="col-md-3 mb-3">
+          <h6 class="text-white">Compañía</h6>
+          <a href="#">Quiénes somos</a><br>
+          <a href="#">Blog</a><br>
+          <a href="#">Oportunidades laborales</a>
+        </div>
+        <div class="col-md-3 mb-3">
+          <h6 class="text-white">Productos</h6>
+          <a href="#">Viaja</a><br>
+          <a href="#">Dirigí</a><br>
+          <a href="#">RUBEN para empresas</a>
+        </div>
+        <div class="col-md-3 mb-3">
+          <h6 class="text-white">Soporte</h6>
+          <a href="#">Centro de ayuda</a><br>
+          <a href="#">Seguridad</a><br>
+          <a href="#">Sostenibilidad</a>
+        </div>
+        <div class="col-md-3 mb-3">
+          <h6 class="text-white">Viajes</h6>
+          <a href="#">Reservar</a><br>
+          <a href="#">Aeropuertos</a><br>
+          <a href="#">Ciudades</a>
+        </div>
+      </div>
+      <div class="text-center mt-4 border-top pt-3">
+        © 2025 RUBEN App — Proyecto Final IES N°6
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
