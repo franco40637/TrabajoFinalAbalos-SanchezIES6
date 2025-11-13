@@ -8,6 +8,6 @@ public class TrabajofinalabalosSanchezies6Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(TrabajofinalabalosSanchezies6Application.class, args);
+		System.out.println("🚗 Aplicación RUBEN iniciada correctamente en http://localhost:8081/");
 	}
-
 }
