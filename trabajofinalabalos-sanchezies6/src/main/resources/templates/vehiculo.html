@@ -3,45 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lista de Usuarios - RUBEN</title>
+  <title>Registrar Vehículo - RUBEN</title>
 
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 
   <style>
-    /* Estilos generales */
-    html, body {
-      height: 100%;
-    }
-
+    /* Estilo general */
     body {
-      display: flex;
-      flex-direction: column;
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      background-color: #fff;
+      background-color: #f8f9fa;
       color: #000;
     }
 
-    main {
-      flex: 1;
-    }
-
-    /* Navbar dropdown hover */
+    /* Efecto menú desplegable */
     .dropdown:hover .dropdown-menu {
       display: block;
       margin-top: 0;
     }
 
-    /* Corrige color del hover en menú desplegable */
-    .dropdown-menu .dropdown-item:hover,
-    .dropdown-menu .dropdown-item:focus,
-    .dropdown-menu .dropdown-item.active {
-      background-color: #dcdcdc !important; 
+    /* Fondo más oscuro en hover del menú */
+    .dropdown-menu .dropdown-item:hover {
+      background-color: #dcdcdc;
       color: #000 !important;
     }
 
-    /* Footer */
+    /* Pie de página */
     footer {
       background-color: #000;
       color: #bbb;
@@ -61,7 +49,7 @@
 </head>
 
 <body>
-  <!-- Navbar -->
+  <!-- Barra de navegación -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
     <div class="container-fluid">
       <a class="navbar-brand fw-bold" href="/">RUBEN</a>
@@ -71,11 +59,12 @@
 
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
+
           <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
 
           <!-- Menú desplegable Usuarios -->
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle active" href="#" id="usuariosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="#" id="usuariosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Usuarios
             </a>
             <ul class="dropdown-menu" aria-labelledby="usuariosDropdown">
@@ -86,7 +75,7 @@
 
           <!-- Menú desplegable Vehículos -->
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="vehiculosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle active" href="#" id="vehiculosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Vehículos
             </a>
             <ul class="dropdown-menu" aria-labelledby="vehiculosDropdown">
@@ -102,51 +91,56 @@
     </div>
   </nav>
 
-  <!-- Contenido principal -->
-  <main class="container mt-5 mb-5">
-    <h2 class="text-center mb-4">Usuarios Registrados</h2>
+  <!-- Formulario de registro de vehículo -->
+  <div class="container mt-5 mb-5">
+    <h2 class="text-center mb-4">Registro de Vehículo</h2>
 
-    <div class="table-responsive">
-  <table class="table table-striped table-bordered shadow-sm bg-white align-middle">
-    <thead class="table-dark text-center">
-      <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Apellido</th>
-        <th>DNI</th>
-        <th>Email</th>
-        <th>Teléfono</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr th:each="u : ${listaUsuarios}">
-        <td th:text="${u.id}"></td>
-        <td th:text="${u.nombre}"></td>
-        <td th:text="${u.apellido}"></td>
-        <td th:text="${u.dni}"></td>
-        <td th:text="${u.email}"></td>
-        <td th:text="${u.telefono}"></td>
-        <td class="text-center">
-          <a th:href="@{'/eliminarUsuario/' + ${u.id}}" 
-             class="btn btn-danger btn-sm"
-             onclick="return confirm('¿Seguro que desea eliminar este usuario?');">
-             Eliminar
-          </a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+    <form th:action="@{/guardarVehiculo}" th:object="${vehiculo}" method="post" class="border rounded p-4 bg-white shadow-sm">
+      
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Marca</label>
+          <input type="text" th:field="*{marca}" class="form-control" placeholder="Ej: Toyota" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Modelo</label>
+          <input type="text" th:field="*{modelo}" class="form-control" placeholder="Ej: Corolla" required>
+        </div>
+      </div>
 
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label class="form-label">Año</label>
+          <input type="number" th:field="*{anio}" class="form-control" min="1900" max="2100" placeholder="Ej: 2020" required>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Color</label>
+          <input type="text" th:field="*{color}" class="form-control" placeholder="Ej: Gris">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Patente</label>
+          <input type="text" th:field="*{patente}" class="form-control" placeholder="Ej: AB123CD" required>
+        </div>
+      </div>
 
-    <div class="text-center mt-4">
-      <a href="/usuario" class="btn btn-success btn-lg">Registrar otro usuario</a>
-      <a href="/" class="btn btn-secondary btn-lg ms-2">Volver al Inicio</a>
-    </div>
-  </main>
+      <div class="mb-4">
+        <label class="form-label">Tipo de Vehículo</label>
+        <select th:field="*{tipo}" class="form-select" required>
+          <option value="">Seleccionar...</option>
+          <option value="X">X (Base)</option>
+          <option value="Luxe">Luxe</option>
+          <option value="Premium">Premium</option>
+        </select>
+      </div>
 
-  <!-- Footer -->
+      <div class="text-center">
+        <button type="submit" class="btn btn-success btn-lg">Guardar Vehículo</button>
+        <a href="/" class="btn btn-secondary btn-lg ms-2">Volver al Inicio</a>
+      </div>
+    </form>
+  </div>
+
+  <!-- Pie de página -->
   <footer>
     <div class="container">
       <div class="row text-start">

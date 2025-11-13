@@ -3,45 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lista de Usuarios - RUBEN</title>
+  <title>Registrar Usuario - RUBEN</title>
 
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 
   <style>
-    /* Estilos generales */
-    html, body {
-      height: 100%;
-    }
-
+    /* Estilo general */
     body {
-      display: flex;
-      flex-direction: column;
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      background-color: #fff;
+      background-color: #f8f9fa;
       color: #000;
     }
 
-    main {
-      flex: 1;
-    }
-
-    /* Navbar dropdown hover */
+    /* Efecto menú desplegable */
     .dropdown:hover .dropdown-menu {
       display: block;
       margin-top: 0;
     }
 
-    /* Corrige color del hover en menú desplegable */
-    .dropdown-menu .dropdown-item:hover,
-    .dropdown-menu .dropdown-item:focus,
-    .dropdown-menu .dropdown-item.active {
-      background-color: #dcdcdc !important; 
+    /* Fondo más oscuro en hover del menú */
+    .dropdown-menu .dropdown-item:hover {
+      background-color: #dcdcdc;
       color: #000 !important;
     }
 
-    /* Footer */
+    /* Pie de página */
     footer {
       background-color: #000;
       color: #bbb;
@@ -61,7 +49,7 @@
 </head>
 
 <body>
-  <!-- Navbar -->
+  <!-- Barra de navegación -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
     <div class="container-fluid">
       <a class="navbar-brand fw-bold" href="/">RUBEN</a>
@@ -71,6 +59,7 @@
 
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
+
           <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
 
           <!-- Menú desplegable Usuarios -->
@@ -102,51 +91,52 @@
     </div>
   </nav>
 
-  <!-- Contenido principal -->
-  <main class="container mt-5 mb-5">
-    <h2 class="text-center mb-4">Usuarios Registrados</h2>
+  <!-- Formulario de registro de usuario -->
+  <div class="container mt-5 mb-5">
+    <h2 class="text-center mb-4">Registro de Usuario</h2>
 
-    <div class="table-responsive">
-  <table class="table table-striped table-bordered shadow-sm bg-white align-middle">
-    <thead class="table-dark text-center">
-      <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Apellido</th>
-        <th>DNI</th>
-        <th>Email</th>
-        <th>Teléfono</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr th:each="u : ${listaUsuarios}">
-        <td th:text="${u.id}"></td>
-        <td th:text="${u.nombre}"></td>
-        <td th:text="${u.apellido}"></td>
-        <td th:text="${u.dni}"></td>
-        <td th:text="${u.email}"></td>
-        <td th:text="${u.telefono}"></td>
-        <td class="text-center">
-          <a th:href="@{'/eliminarUsuario/' + ${u.id}}" 
-             class="btn btn-danger btn-sm"
-             onclick="return confirm('¿Seguro que desea eliminar este usuario?');">
-             Eliminar
-          </a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+    <form th:action="@{/guardarUsuario}" th:object="${usuario}" method="post" class="border rounded p-4 bg-white shadow-sm">
+      
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Nombre</label>
+          <input type="text" th:field="*{nombre}" class="form-control" placeholder="Ej: Gabriela" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Apellido</label>
+          <input type="text" th:field="*{apellido}" class="form-control" placeholder="Ej: Sánchez" required>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Email</label>
+          <input type="email" th:field="*{email}" class="form-control" placeholder="Ej: gabriela@example.com" required>
+        </div>
+        <div class="row mb-3">
+  <div class="col-md-6">
+    <label class="form-label">DNI</label>
+    <input type="text" th:field="*{dni}" class="form-control" placeholder="Ej: 40321876" required>
+  </div>
 </div>
 
+<!-- Mostrar mensaje de error -->
+<div th:if="${mensajeError}" class="alert alert-danger text-center" th:text="${mensajeError}"></div>
 
-    <div class="text-center mt-4">
-      <a href="/usuario" class="btn btn-success btn-lg">Registrar otro usuario</a>
-      <a href="/" class="btn btn-secondary btn-lg ms-2">Volver al Inicio</a>
-    </div>
-  </main>
+        <div class="col-md-6">
+          <label class="form-label">Teléfono</label>
+          <input type="text" th:field="*{telefono}" class="form-control" placeholder="Ej: 381-1234567">
+        </div>
+      </div>
 
-  <!-- Footer -->
+      <div class="text-center">
+        <button type="submit" class="btn btn-success btn-lg">Guardar Usuario</button>
+        <a href="/" class="btn btn-secondary btn-lg ms-2">Volver al Inicio</a>
+      </div>
+    </form>
+  </div>
+
+  <!-- Pie de página -->
   <footer>
     <div class="container">
       <div class="row text-start">
