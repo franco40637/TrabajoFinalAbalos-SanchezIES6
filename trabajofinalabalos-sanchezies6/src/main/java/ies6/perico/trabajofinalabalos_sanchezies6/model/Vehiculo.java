@@ -16,38 +16,38 @@ public class Vehiculo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     
-    // Validación: La marca no puede estar vacía y debe tener entre 3 y 50 caracteres
+    // Validacion La marca no puede estar vacía y debe tener entre 3 y 50 caracteres
     @NotBlank(message = "La marca es obligatoria")
     @Size(min = 3, max = 50, message = "La marca debe tener entre 3 y 50 caracteres")
     private String marca;
     
-    // Validación: El modelo no puede estar vacío
+    //  El modelo no puede estar vacío
     @NotBlank(message = "El modelo es obligatorio")
     private String modelo;
     
-    // Validación: El año es obligatorio y debe ser un valor razonable
+    // El año es obligatorio y debe ser un valor razonable
     @NotNull(message = "El año es obligatorio")
     @Min(value = 1950, message = "El año debe ser posterior a 1950")
     @Max(value = 2026, message = "El año no puede ser futuro")
     private int anio;
     
-    // Validación: El color no puede estar vacío
+    // El color no puede estar vacío
     @NotBlank(message = "El color es obligatorio")
     private String color;
     
-    // Validación: Patente es obligatoria y se valida con Regex para formato de patente
+    //  Patente es obligatoria y se valida con Regex para formato de patente
     // Se mantiene la restricción de base de datos
     @NotBlank(message = "La patente es obligatoria")
     @Pattern(regexp = "^[A-Z]{2}\\d{3}[A-Z]{2}$|^[A-Z]{3}\\d{3}$", message = "Formato de patente no válido (Ej: AB123CD o ABC123)")
     @Column(unique = true, nullable = false)
     private String patente;
     
-    // Validación: El tipo es obligatorio (Se valida con @NotBlank porque viene de un select)
+    // Validacion el tipo es obligatorio (Se valida con @NotBlank porque viene de un select)
     @NotBlank(message = "Debe seleccionar un tipo de vehículo")
-    // Tipo de vehículo según la consigna (X, Luxe o Premium)
+    // Tipo de vehículo segun la consigna (X, Luxe o Premium)
     private String tipo;
     
-    // Eliminación lógica
+    // Eliminacion logica
     private boolean activo = true;
 
     // ... (El resto del código: Constructores, Getters y Setters se mantienen) ...

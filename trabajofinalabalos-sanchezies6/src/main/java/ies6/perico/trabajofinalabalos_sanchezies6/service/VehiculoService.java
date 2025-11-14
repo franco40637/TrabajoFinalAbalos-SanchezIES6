@@ -11,7 +11,7 @@ public interface VehiculoService {
 
     void eliminarVehiculoLogico(int id);
     
-    // 🆕 NUEVO: Método para buscar un vehículo por su ID
+    // NUEVO: Método para buscar un vehículo por su ID
     Vehiculo buscarPorId(int id); 
 }
 
