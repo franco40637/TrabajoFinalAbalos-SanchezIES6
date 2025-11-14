@@ -1,58 +1,80 @@
 package ies6.perico.trabajofinalabalos_sanchezies6.controller;
 
 import ies6.perico.trabajofinalabalos_sanchezies6.model.Usuario;
-import ies6.perico.trabajofinalabalos_sanchezies6.repository.UsuarioRepository;
+import ies6.perico.trabajofinalabalos_sanchezies6.service.UsuarioService;
+import jakarta.validation.Valid; // 🆕 Nuevo
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult; // 🆕 Nuevo
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class UsuarioController {
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    private UsuarioService usuarioService; // 🆕 Usamos el Service
 
-    // 🟩 Mostrar formulario de registro
+    // 1. Muestra el formulario de registro (Crear)
     @GetMapping("/usuario")
     public String mostrarFormularioUsuario(Model model) {
         model.addAttribute("usuario", new Usuario());
-        model.addAttribute("mensajeError", null);
-        return "usuario";
+        return "usuario"; // busca usuario.html
+    }
+    
+    // 2. Muestra el formulario con datos precargados (Modificar)
+    @GetMapping("/modificarUsuario/{id}")
+    public String modificarUsuario(@PathVariable("id") int id, Model model) {
+        Usuario usuario = usuarioService.buscarPorId(id);
+        
+        // Manejo de caso en que el usuario no exista o esté inactivo
+        if (usuario == null || !usuario.isActivo()) {
+            return "redirect:/listaUsuarios";
+        }
+        
+        model.addAttribute("usuario", usuario);
+        // Reutiliza la misma plantilla HTML para la edición
+        return "usuario"; 
     }
 
-    // 🟩 Guardar usuario validando duplicados
+
+    // 3. Guarda o Actualiza un usuario
     @PostMapping("/guardarUsuario")
-    public String guardarUsuario(@ModelAttribute("usuario") Usuario usuario, Model model) {
+    public String guardarUsuario(@Valid @ModelAttribute Usuario usuario, // 🆕 Validación de campos
+                                 BindingResult result, 
+                                 Model model) {
 
-        if (usuarioRepository.existsByEmail(usuario.getEmail())) {
-            model.addAttribute("usuario", usuario);
-            model.addAttribute("mensajeError", "⚠️ El email ya está registrado. Intente con otro.");
-            return "usuario";
+        // A. Manejo de errores de validación de campos (@NotBlank, @Pattern, etc.)
+        if (result.hasErrors()) {
+            return "usuario"; 
         }
 
-        if (usuarioRepository.existsByDni(usuario.getDni())) {
+        // B. Manejo de errores de LÓGICA DE NEGOCIO (DNI/Email Duplicado)
+        boolean guardado = usuarioService.guardarUsuario(usuario);
+
+        if (!guardado) {
+            // El Service ha devuelto 'false' por duplicidad
             model.addAttribute("usuario", usuario);
-            model.addAttribute("mensajeError", "⚠️ El DNI ya está registrado. Verifique los datos.");
-            return "usuario";
+            model.addAttribute("errorDuplicado", 
+                "⚠️ Ya existe un usuario registrado con el DNI o Email ingresado.");
+            return "usuario"; 
         }
 
-        usuarioRepository.save(usuario);
         return "redirect:/listaUsuarios";
     }
 
-    // 🟩 Mostrar lista de usuarios
+    // 4. Muestra la lista de usuarios activos (READ)
     @GetMapping("/listaUsuarios")
     public String listaUsuarios(Model model) {
-        model.addAttribute("listaUsuarios", usuarioRepository.findAll());
-        return "listaUsuarios";
+        // Lista solo los usuarios activos
+        model.addAttribute("listaUsuarios", usuarioService.listarUsuarios()); 
+        return "listaUsuarios"; // busca listaUsuarios.html
     }
 
-    // 🟥 Eliminar usuario
+    // 5. Elimina lógicamente un usuario (DELETE LÓGICO)
     @GetMapping("/eliminarUsuario/{id}")
     public String eliminarUsuario(@PathVariable("id") int id) {
-        usuarioRepository.deleteById(id);
+        usuarioService.eliminarUsuarioLogico(id); // 🆕 Eliminación lógica
         return "redirect:/listaUsuarios";
     }
 }
-

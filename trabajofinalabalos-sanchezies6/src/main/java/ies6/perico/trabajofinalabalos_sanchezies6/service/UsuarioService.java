@@ -1,24 +1,19 @@
 package ies6.perico.trabajofinalabalos_sanchezies6.service;
 
 import ies6.perico.trabajofinalabalos_sanchezies6.model.Usuario;
-import org.springframework.stereotype.Service;
-import java.util.ArrayList;
 import java.util.List;
 
-@Service
-public class UsuarioService {
+public interface UsuarioService {
 
-    private List<Usuario> usuarios = new ArrayList<>();
+    // Se usará boolean para manejar errores de duplicidad (similar a VehiculoService)
+    boolean guardarUsuario(Usuario usuario); 
 
-    public void agregarUsuario(Usuario usuario) {
-        usuarios.add(usuario);
-    }
+    // Listar solo los usuarios activos
+    List<Usuario> listarUsuarios(); 
 
-    public List<Usuario> listarUsuarios() {
-        return usuarios;
-    }
-
-    public void eliminarUsuario(int id) {
-        usuarios.removeIf(u -> u.getId() == id);
-    }
+    // Eliminación lógica (similar a VehiculoService)
+    void eliminarUsuarioLogico(int id); 
+    
+    // Para el formulario de Modificar
+    Usuario buscarPorId(int id); 
 }
