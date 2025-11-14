@@ -4,8 +4,15 @@ import ies6.perico.trabajofinalabalos_sanchezies6.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
-    boolean existsByEmail(String email);
-    boolean existsByDni(String dni);
+    // Busca si ya existe un usuario con ese email (para validación)
+    Usuario findByEmail(String email);
+    // Busca si ya existe un usuario con ese DNI (para validación)
+    Usuario findByDni(String dni);
+    // 🆕 Nuevo: Buscar todos los usuarios activos
+    List<Usuario> findByActivoTrue(); 
+    
 }
