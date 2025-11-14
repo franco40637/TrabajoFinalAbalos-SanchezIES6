@@ -16,30 +16,39 @@ public class VehiculoServiceImp implements VehiculoService {
     private VehiculoRepository vehiculoRepository;
 
     @Override
-    // CONTROL: Guarda un vehículo solo si no existe la patente
-    public void guardarVehiculo(Vehiculo vehiculo) {
+    public boolean guardarVehiculo(Vehiculo vehiculo) {
         Vehiculo existente = vehiculoRepository.findByPatente(vehiculo.getPatente());
 
-        if (existente == null) {
-            vehiculo.setActivo(true); // marca como activo al crearlo
-            vehiculoRepository.save(vehiculo);
-            System.out.println("✅ Vehículo guardado: " + vehiculo.getMarca() + " " + vehiculo.getModelo());
-        } else {
-            System.out.println("⚠️ Ya existe un vehículo con la patente " + vehiculo.getPatente());
+        if (existente != null) {
+            // Permite guardar solo si el ID del vehículo que se guarda coincide con el existente (edición)
+            if (vehiculo.getId() == 0 || vehiculo.getId() != existente.getId()) {
+                System.out.println("⚠️ Ya existe un vehículo con la patente " + vehiculo.getPatente());
+                return false; // Error de patente duplicada.
+            }
         }
+        
+        // Si es un vehículo nuevo, asegura que esté activo
+        if (vehiculo.getId() == 0) {
+            vehiculo.setActivo(true);
+        }
+
+        vehiculoRepository.save(vehiculo);
+        System.out.println("✅ Vehículo guardado: " + vehiculo.getMarca() + " " + vehiculo.getModelo());
+        return true;
     }
 
+    // Listar vehículos activos
     @Override
-    // CONTROL: Lista solo los vehículos activos (no eliminados)
     public List<Vehiculo> listarVehiculos() {
+        // CONTROL: Lista solo los vehículos activos (no eliminados lógicamente)
         return vehiculoRepository.findAll()
                 .stream()
                 .filter(Vehiculo::isActivo)
                 .collect(Collectors.toList());
     }
 
+    // Eliminar LÓGICAMENTE
     @Override
-    // ELIMINAR LÓGICAMENTE: no se borra, solo se marca como inactivo
     public void eliminarVehiculoLogico(int id) {
         Vehiculo v = vehiculoRepository.findById(id).orElse(null);
         if (v != null && v.isActivo()) {
@@ -47,7 +56,12 @@ public class VehiculoServiceImp implements VehiculoService {
             vehiculoRepository.save(v);
             System.out.println("🗑️ Vehículo eliminado lógicamente: " + v.getPatente());
         } else {
-            System.out.println("⚠️ No se encontró el vehículo con ID: " + id);
+            System.out.println("⚠️ No se encontró el vehículo activo con ID: " + id);
         }
+    }
+    
+    @Override
+    public Vehiculo buscarPorId(int id) {
+        return vehiculoRepository.findById(id).orElse(null);
     }
 }
