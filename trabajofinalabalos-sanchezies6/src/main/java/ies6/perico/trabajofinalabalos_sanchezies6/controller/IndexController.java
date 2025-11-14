@@ -15,7 +15,7 @@ public class IndexController {
 
     @GetMapping("/")
     public String index(Model model) {
-        // 🔹 Carga los vehículos activos desde la base de datos
+        // Carga los vehículos activos desde la base de datos
         model.addAttribute("vehiculos", vehiculoService.listarVehiculos());
         return "index"; // Busca index.html en templates
     }
