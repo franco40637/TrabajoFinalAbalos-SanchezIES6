@@ -14,20 +14,21 @@ public class VehiculoServiceImp implements VehiculoService {
 
     @Autowired
     private VehiculoRepository vehiculoRepository;
+@Override
+public boolean guardarVehiculo(Vehiculo vehiculo) {
+    Vehiculo existente = vehiculoRepository.findByPatente(vehiculo.getPatente());
 
-    @Override
-    // CONTROL: Guarda un vehículo solo si no existe la patente
-    public void guardarVehiculo(Vehiculo vehiculo) {
-        Vehiculo existente = vehiculoRepository.findByPatente(vehiculo.getPatente());
-
-        if (existente == null) {
-            vehiculo.setActivo(true); // marca como activo al crearlo
-            vehiculoRepository.save(vehiculo);
-            System.out.println("✅ Vehículo guardado: " + vehiculo.getMarca() + " " + vehiculo.getModelo());
-        } else {
-            System.out.println("⚠️ Ya existe un vehículo con la patente " + vehiculo.getPatente());
-        }
+    if (existente == null) {
+        vehiculo.setActivo(true);
+        vehiculoRepository.save(vehiculo);
+        System.out.println("✅ Vehículo guardado: " + vehiculo.getMarca() + " " + vehiculo.getModelo());
+        return true;
+    } else {
+        System.out.println("⚠️ Ya existe un vehículo con la patente " + vehiculo.getPatente());
+        return false;
     }
+}
+
 
     @Override
     // CONTROL: Lista solo los vehículos activos (no eliminados)

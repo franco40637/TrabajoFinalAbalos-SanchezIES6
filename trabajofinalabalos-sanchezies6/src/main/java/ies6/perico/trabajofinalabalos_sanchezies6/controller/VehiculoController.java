@@ -24,11 +24,19 @@ public class VehiculoController {
     }
 
     // 🔹 Guarda un vehículo nuevo
-    @PostMapping("/guardarVehiculo")
-    public String guardarVehiculo(@ModelAttribute Vehiculo vehiculo) {
-        vehiculoService.guardarVehiculo(vehiculo);
-        return "redirect:/listaVehiculos"; // redirige a la lista
+   @PostMapping("/guardarVehiculo")
+public String guardarVehiculo(@ModelAttribute Vehiculo vehiculo, Model model) {
+    boolean guardado = vehiculoService.guardarVehiculo(vehiculo);
+
+    if (!guardado) {
+        model.addAttribute("vehiculo", vehiculo);
+        model.addAttribute("errorPatente", "⚠️ Ya existe un vehículo registrado con la patente ingresada.");
+        return "vehiculo"; // vuelve al formulario mostrando el mensaje
     }
+
+    return "redirect:/listaVehiculos";
+}
+
 
     // 🔹 Muestra la lista de vehículos activos
     @GetMapping("/listaVehiculos")
