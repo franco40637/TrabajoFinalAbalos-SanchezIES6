@@ -5,9 +5,13 @@ import ies6.perico.trabajofinalabalos_sanchezies6.model.Vehiculo;
 
 public interface VehiculoService {
 
-    void guardarVehiculo(Vehiculo vehiculo);
+    boolean guardarVehiculo(Vehiculo vehiculo);
 
     List<Vehiculo> listarVehiculos();
 
     void eliminarVehiculoLogico(int id);
+    
+    // 🆕 NUEVO: Método para buscar un vehículo por su ID
+    Vehiculo buscarPorId(int id); 
 }
+
