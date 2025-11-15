@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" 
+    th:replace="~{layout :: layout (~{::title}, ~{::head-css}, ~{::nav-content}, ~{::main-content}, ~{::scripts})}">
+
+<head>
+    <title>Lista de Usuarios - RUBEN</title>
+    <th:block th:fragment="head-css"></th:block>
+</head>
+
+<body>
+
+    <th:block th:fragment="nav-content">
+        <div th:replace="~{layout :: navbar('usuarios')}"></div>
+    </th:block>
+
+    <th:block th:fragment="main-content">
+
+    <main class="container mt-5 mb-5">
+
+        <h2 class="text-center mb-4">Usuarios Registrados (Activos)</h2>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle shadow-sm">
+                <thead class="table-dark text-center">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>DNI</th>
+                        <th>Email</th>
+                        <th>Teléfono</th>
+                        <th>Acciones</th> 
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="usuario : ${listaUsuarios}">
+                        <td th:text="${usuario.id}"></td>
+                        <td th:text="${usuario.nombre}"></td>
+                        <td th:text="${usuario.apellido}"></td>
+                        <td th:text="${usuario.dni}"></td>
+                        <td th:text="${usuario.email}"></td>
+                        <td th:text="${usuario.telefono}"></td>
+                        <td class="text-center">
+                            <a th:href="@{/modificarUsuario/{id}(id=${usuario.id})}" 
+                                class="btn btn-warning btn-sm me-2">
+                                 <i class="bi bi-pencil-square"></i> Modificar
+                            </a>
+                            
+                            <a th:href="@{/eliminarUsuario/{id}(id=${usuario.id})}" 
+                                class="btn btn-danger btn-sm"
+                                onclick="return confirm('¿Seguro que desea eliminar lógicamente este Usuario?');">
+                                 <i class="bi bi-trash"></i> Eliminar
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="/usuario" class="btn btn-success btn-lg">Registrar otro Usuario</a>
+            <a href="/" class="btn btn-secondary btn-lg ms-2">Volver al Inicio</a>
+        </div>
+
+    </main>
+
+    </th:block>
+
+    <th:block th:fragment="scripts"></th:block>
+
+</body>
+</html>
