@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ies6.perico.trabajofinalabalos_sanchezies6.model.Conductor;
-import ies6.perico.trabajofinalabalos_sanchezies6.model.Vehiculo;
 import ies6.perico.trabajofinalabalos_sanchezies6.repository.ConductorRepository;
 
 @Service
@@ -19,36 +18,18 @@ public class ConductorServiceImp implements ConductorService {
     @Override
     public boolean guardarConductor(Conductor conductor) {
         
-        // Verificar que DNI sea unico
+        // 1. Verificar que DNI sea unico (Incluye validación para nuevos registros o modificaciones)
         Conductor dniExistente = conductorRepository.findByDni(conductor.getDni());
         if (dniExistente != null && (conductor.getId() == 0 || conductor.getId() != dniExistente.getId())) {
             System.out.println("⚠️ Error: DNI duplicado.");
             return false;
         }
 
-        // Verificar Licencia sea unica
+        // 2. Verificar Licencia sea unica (Incluye validación para nuevos registros o modificaciones)
         Conductor licenciaExistente = conductorRepository.findByLicencia(conductor.getLicencia());
         if (licenciaExistente != null && (conductor.getId() == 0 || conductor.getId() != licenciaExistente.getId())) {
             System.out.println("⚠️ Error: Licencia duplicada.");
             return false;
-        }
-
-        // Verificar si el Vehiculo ya esta asignado a OTRO conductor
-        Vehiculo vehiculoAsignado = conductor.getVehiculo();
-        if (vehiculoAsignado != null) {
-            
-            // CORRECCION: El repositorio ahora devuelve una lista
-            List<Conductor> conductoresConMismoVehiculo = conductorRepository.findByVehiculo(vehiculoAsignado);
-            
-            // Si la lista no está vacía, verificamos si alguno de los conductores encontrados
-            // NO es el conductor que estamos intentando guardar/modificar (c.getId() != conductor.getId())
-            boolean vehiculoYaAsignadoAOtro = conductoresConMismoVehiculo.stream()
-                .anyMatch(c -> c.getId() != conductor.getId());
-            
-            if (vehiculoYaAsignadoAOtro) {
-                System.out.println("⚠️ Error: Vehículo ya asignado a otro conductor.");
-                return false;
-            }
         }
         
         // Si es nuevo, asegurar activo
@@ -60,6 +41,10 @@ public class ConductorServiceImp implements ConductorService {
         System.out.println("✅ Conductor guardado: " + conductor.getNombre() + " " + conductor.getApellido());
         return true;
     }
+
+    // -------------------------------------------------------------
+    // MÉTODOS EXISTENTES
+    // -------------------------------------------------------------
 
     @Override
     public List<Conductor> listarConductores() {
@@ -85,5 +70,16 @@ public class ConductorServiceImp implements ConductorService {
         } else {
             System.out.println("⚠️ No se encontró el conductor activo con ID: " + id);
         }
+    }
+    
+    // -------------------------------------------------------------
+    // 1. METODO AÑADIDO PARA SOLUCIONAR EL ERROR DE COMPILACION (Metodo Faltante)
+    // -------------------------------------------------------------
+    @Override
+    public List<Conductor> listarConductoresActivosSinVehiculo() {
+        
+        List<Conductor> todosConductoresActivos = conductorRepository.findByActivoTrue();
+        
+        return todosConductoresActivos; // Reemplaza esto con la consulta correcta
     }
 }

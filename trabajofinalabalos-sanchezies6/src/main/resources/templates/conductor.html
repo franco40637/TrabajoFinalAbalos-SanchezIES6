@@ -1,105 +1,89 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{layout :: layout (~{::title}, ~{::head_css}, ~{::nav_content}, ~{::main_content}, ~{::scripts})}">
+	  th:replace="~{layout :: layout (~{::title}, ~{::head_css}, ~{::nav_content}, ~{::main_content}, ~{::scripts})}">
 
 <head>
-    <title th:text="${conductor.id > 0 ? 'Modificar Conductor' : 'Registrar Conductor'}"></title>
+	<title th:text="${conductor.id > 0 ? 'Modificar Conductor' : 'Registrar Conductor'}"></title>
 
-    <th:block th:fragment="head_css">
-    </th:block>
+	<th:block th:fragment="head_css">
+	</th:block>
 </head>
 
 <body>
 
-    <th:block th:fragment="nav_content">
-        <div th:replace="~{layout :: navbar('conductores')}"></div>
-    </th:block>
+	<th:block th:fragment="nav_content">
+		<div th:replace="~{layout :: navbar('conductores')}"></div>
+	</th:block>
 
-    <th:block th:fragment="main_content">
+	<th:block th:fragment="main_content">
 
-    <div class="container mt-5 mb-5">
+	<div class="container mt-5 mb-5">
 
-        <h2 class="text-center mb-4" th:text="${conductor.id > 0 ? 'Modificar Conductor' : 'Registro de Conductor'}">
-            Registro de Conductor
-        </h2>
+		<h2 class="text-center mb-4" th:text="${conductor.id > 0 ? 'Modificar Conductor' : 'Registro de Conductor'}">
+			Registro de Conductor
+		</h2>
 
-        <div th:if="${errorLogica}" class="alert alert-warning alert-dismissible fade show" role="alert">
-            <i class="bi bi-exclamation-triangle-fill"></i>
-            <span th:text="${errorLogica}"></span>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
+		<div th:if="${errorLogica}" class="alert alert-warning alert-dismissible fade show" role="alert">
+			<i class="bi bi-exclamation-triangle-fill"></i>
+			<span th:text="${errorLogica}"></span>
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
 
-        <form th:action="@{/guardarConductor}" th:object="${conductor}" method="post"
-              class="border rounded p-4 bg-white shadow-sm">
+		<form th:action="@{/guardarConductor}" th:object="${conductor}" method="post"
+			  class="border rounded p-4 bg-white shadow-sm">
 
-            <input type="hidden" th:field="*{id}" /> 
+			<input type="hidden" th:field="*{id}" /> 
 
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label class="form-label">DNI</label>
-                    <input type="text" th:field="*{dni}" class="form-control"
-                           th:classappend="${#fields.hasErrors('dni') ? 'is-invalid' : ''}"
-                           placeholder="Ej: 30123456">
-                    <span th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}" class="text-danger"></span>
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label">Licencia</label>
-                    <input type="text" th:field="*{licencia}" class="form-control"
-                           th:classappend="${#fields.hasErrors('licencia') ? 'is-invalid' : ''}"
-                           placeholder="Ej: AB123456">
-                    <span th:if="${#fields.hasErrors('licencia')}" th:errors="*{licencia}" class="text-danger"></span>
-                </div>
-            </div>
-            
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label class="form-label">Nombre</label>
-                    <input type="text" th:field="*{nombre}" class="form-control"
-                           th:classappend="${#fields.hasErrors('nombre') ? 'is-invalid' : ''}"
-                           placeholder="Ej: Juan">
-                    <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="text-danger"></span>
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label">Apellido</label>
-                    <input type="text" th:field="*{apellido}" class="form-control"
-                           th:classappend="${#fields.hasErrors('apellido') ? 'is-invalid' : ''}"
-                           placeholder="Ej: Perez">
-                    <span th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}" class="text-danger"></span>
-                </div>
-            </div>
+			<div class="row mb-3">
+				<div class="col-md-6">
+					<label class="form-label">DNI</label>
+					<input type="text" th:field="*{dni}" class="form-control"
+							th:classappend="${#fields.hasErrors('dni') ? 'is-invalid' : ''}"
+							placeholder="Ej: 30123456">
+					<span th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}" class="text-danger"></span>
+				</div>
+				<div class="col-md-6">
+					<label class="form-label">Licencia</label>
+					<input type="text" th:field="*{licencia}" class="form-control"
+							th:classappend="${#fields.hasErrors('licencia') ? 'is-invalid' : ''}"
+							placeholder="Ej: AB123456">
+					<span th:if="${#fields.hasErrors('licencia')}" th:errors="*{licencia}" class="text-danger"></span>
+				</div>
+			</div>
+			
+			<div class="row mb-3">
+				<div class="col-md-6">
+					<label class="form-label">Nombre</label>
+					<input type="text" th:field="*{nombre}" class="form-control"
+							th:classappend="${#fields.hasErrors('nombre') ? 'is-invalid' : ''}"
+							placeholder="Ej: Juan">
+					<span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="text-danger"></span>
+				</div>
+				<div class="col-md-6">
+					<label class="form-label">Apellido</label>
+					<input type="text" th:field="*{apellido}" class="form-control"
+							th:classappend="${#fields.hasErrors('apellido') ? 'is-invalid' : ''}"
+							placeholder="Ej: Perez">
+					<span th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}" class="text-danger"></span>
+				</div>
+			</div>
 
-            <div class="mb-4">
-                <label class="form-label">Vehículo Asignado</label>
-                <select th:field="*{vehiculo}" class="form-select">
-                    <option th:value="null" th:text="'--- SIN ASIGNAR ---'"></option>
-                    
-                    <option th:each="v : ${vehiculosActivos}" 
-                            th:value="${v.id}" 
-                            th:text="${v.marca + ' ' + v.modelo + ' (' + v.patente + ')'}"
-                            
-                            th:disabled="${v.id != null 
-                                && (conductor.vehiculo == null || v.id != conductor.vehiculo.id) 
-                                && #lists.size(cRepo.findByVehiculo(v)) > 0}"> </option>
-                </select>
-            </div>
+			<div class="d-grid gap-2 d-md-flex justify-content-md-center">
+				<button type="submit" class="btn btn-success btn-lg">
+					<i th:classappend="${conductor.id > 0 ? 'bi-save' : 'bi-person-plus'}"></i>
+					<span th:text="${conductor.id > 0 ? 'Guardar Cambios' : 'Registrar Conductor'}">Registrar</span>
+				</button>
+				<a href="/listaConductores" class="btn btn-secondary btn-lg">
+					<i class="bi bi-x-circle"></i> Cancelar
+				</a>
+			</div>
 
+		</form>
+	</div>
 
-            <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-                <button type="submit" class="btn btn-success btn-lg">
-                    <i th:classappend="${conductor.id > 0 ? 'bi-save' : 'bi-person-plus'}"></i>
-                    <span th:text="${conductor.id > 0 ? 'Guardar Cambios' : 'Registrar Conductor'}">Registrar</span>
-                </button>
-                <a href="/listaConductores" class="btn btn-secondary btn-lg">
-                    <i class="bi bi-x-circle"></i> Cancelar
-                </a>
-            </div>
+	</th:block>
 
-        </form>
-    </div>
-
-    </th:block>
-
-    <th:block th:fragment="scripts"></th:block>
+	<th:block th:fragment="scripts"></th:block>
 
 </body>
 </html>
