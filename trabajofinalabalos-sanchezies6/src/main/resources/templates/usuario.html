@@ -78,10 +78,9 @@
             
             <div class="text-center">
                 <button type="submit" class="btn btn-success btn-lg">
-                    <i th:class="${usuario.id > 0 ? 'bi bi-save' : 'bi bi-person-add'}"></i> 
                     <span th:text="${usuario.id > 0 ? 'Actualizar Usuario' : 'Guardar Usuario'}">Guardar</span>
                 </button>
-                <a href="/listaUsuarios" class="btn btn-secondary btn-lg ms-2">Cancelar</a>
+                <a href="/" class="btn btn-secondary btn-lg ms-2">Cancelar</a>
             </div>
         </form>
     </div>

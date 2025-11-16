@@ -1,7 +1,7 @@
 package ies6.perico.trabajofinalabalos_sanchezies6.controller;
 
 import ies6.perico.trabajofinalabalos_sanchezies6.model.Vehiculo;
-import ies6.perico.trabajofinalabalos_sanchezies6.service.ConductorService; // AÑADIDO
+import ies6.perico.trabajofinalabalos_sanchezies6.service.ConductorService;
 import ies6.perico.trabajofinalabalos_sanchezies6.service.VehiculoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +19,14 @@ public class VehiculoController {
 	@Autowired
 	private VehiculoService vehiculoService;
 
-    @Autowired // AÑADIDO: Necesitamos el servicio de conductor para la lista desplegable
+    @Autowired // Necesitamos el servicio de conductor para la lista desplegable
     private ConductorService conductorService; 
 
-	// 1. Muestra el formulario de carga de vehículos (Para CREAR un registro nuevo)
+	//  Muestra el formulario de carga de vehiculos Para CREAR un registro nuevo
 	@GetMapping("/vehiculo")
 	public String mostrarFormularioVehiculo(Model model) {
 		model.addAttribute("vehiculo", new Vehiculo());
-        // AÑADIDO: Pasar la lista de conductores disponibles
+        // Pasa la lista de conductores disponibles
         model.addAttribute("conductoresDisponibles", conductorService.listarConductoresActivosSinVehiculo()); 
 		return "vehiculo"; // busca vehiculo.html
 	}
@@ -37,27 +37,23 @@ public class VehiculoController {
 		// Usa el Service para buscar el vehículo por el ID
 		Vehiculo vehiculo = vehiculoService.buscarPorId(id);
 		
-		// Manejo de caso en que el vehículo no exista o esté inactivo
+		// Manejo de caso en que el vehiculo no exista o este inactivo
 		if (vehiculo == null || !vehiculo.isActivo()) {
 			return "redirect:/listaVehiculos";
 		}
 		
 		model.addAttribute("vehiculo", vehiculo);
-        // AÑADIDO: Pasar la lista de conductores disponibles
-        // Nota: Se debe incluir al conductor actualmente asignado, incluso si tiene el flag "sin vehículo" en la DB.
-        // Asumo que el servicio maneja esto correctamente.
+        //Pasa la lista de conductores disponibles
         model.addAttribute("conductoresDisponibles", conductorService.listarConductoresActivosSinVehiculo());
-        
-		// Reutiliza la misma plantilla HTML para la edición
 		return "vehiculo"; 
 	}
 
 
-	// 3. Guarda o Actualiza un vehículo (PostMapping maneja ambos: CREATE y UPDATE)
+	// 3. Guarda o Actualiza un vehiculo (PostMapping maneja ambos: CREATE y UPDATE)
 	@PostMapping("/guardarVehiculo")
 	public String guardarVehiculo(@Valid @ModelAttribute Vehiculo vehiculo, 
-								 BindingResult result, 
-								 Model model) {
+	BindingResult result, 
+	Model model) {
 
 		// A. Manejo de errores de validación de campos (@NotBlank, @Min, etc.)
 		if (result.hasErrors()) {
@@ -81,7 +77,7 @@ public class VehiculoController {
 		return "redirect:/listaVehiculos";
 	}
 
-	// 4. Muestra la lista de vehículos activos (READ)
+	// 4. Muestra la lista de vehículos activos
 	@GetMapping("/listaVehiculos")
 	public String listarVehiculos(Model model) {
 		model.addAttribute("listaVehiculos", vehiculoService.listarVehiculos());

@@ -15,32 +15,37 @@ public class VehiculoServiceImp implements VehiculoService {
     @Autowired
     private VehiculoRepository vehiculoRepository;
 
-    @Override
-    public boolean guardarVehiculo(Vehiculo vehiculo) {
-        Vehiculo existente = vehiculoRepository.findByPatente(vehiculo.getPatente());
+    // VehiculoServiceImp.java
 
-        if (existente != null) {
-            // Permite guardar solo si el ID del vehículo que se guarda coincide con el existente (edición)
-            if (vehiculo.getId() == 0 || vehiculo.getId() != existente.getId()) {
-                System.out.println("⚠️ Ya existe un vehículo con la patente " + vehiculo.getPatente());
-                return false; // Error de patente duplicada.
-            }
+@Override
+public boolean guardarVehiculo(Vehiculo vehiculo) {
+    Vehiculo existente = vehiculoRepository.findByPatente(vehiculo.getPatente());
+    
+    // Si encontramos un vehiculo con la misma patente
+    if (existente != null) {
+        
+        if (existente.getId() != vehiculo.getId()) { 
+            System.out.println("⚠️ Ya existe un vehículo con la patente " + vehiculo.getPatente());
+            return false; // Error: Patente duplicada.
         }
         
-        // Si es un vehículo nuevo, asegura que esté activo
-        if (vehiculo.getId() == 0) {
-            vehiculo.setActivo(true);
-        }
-
-        vehiculoRepository.save(vehiculo);
-        System.out.println("✅ Vehículo guardado: " + vehiculo.getMarca() + " " + vehiculo.getModelo());
-        return true;
     }
+    
+    
+    if (vehiculo.getId() == 0) { 
+        vehiculo.setActivo(true);
+    }
+
+    // Aquí se guarda. vehiculoRepository.save(vehiculo) devuelve el objeto guardado 
+    vehiculoRepository.save(vehiculo);
+    System.out.println("✅ Vehículo guardado: " + vehiculo.getMarca() + " " + vehiculo.getModelo());
+    return true;
+}
 
     // Listar vehículos activos
     @Override
     public List<Vehiculo> listarVehiculos() {
-        // CONTROL: Lista solo los vehículos activos (no eliminados lógicamente)
+        // CONTROL: Lista solo los vehículos activos
         return vehiculoRepository.findAll()
                 .stream()
                 .filter(Vehiculo::isActivo)

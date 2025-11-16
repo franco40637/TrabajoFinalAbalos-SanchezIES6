@@ -12,7 +12,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     Usuario findByEmail(String email);
     // Busca si ya existe un usuario con ese DNI (para validación)
     Usuario findByDni(String dni);
-    // 🆕 Nuevo: Buscar todos los usuarios activos
+    //Buscar todos los usuarios activos
     List<Usuario> findByActivoTrue(); 
     
 }

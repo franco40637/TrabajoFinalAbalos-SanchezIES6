@@ -1,17 +1,12 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org" 
-    th:replace="~{layout :: layout (~{::title}, ~{::head-css}, ~{::nav-content}, ~{::main-content}, ~{::scripts})}">
+    th:replace="~{layout :: layout (~{::title}, ~{::head_css}, ~{::nav_content}, ~{::main_content}, ~{::scripts})}">
 
 <head>
     <title>Inicio - RUBEN</title>
-    <th:block th:fragment="head-css">
+    <th:block th:fragment="head_css">
         <style>
-            /* Estilo general del cuerpo aunque ya está en layout */
-            body {
-                font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-                background-color: #fff;
-                color: #000;
-            }
+            
             /* Sección principal tipo Uber */
             .principal {
                 padding: 100px 20px;
@@ -114,11 +109,11 @@
 </head>
 
 <body>
-    <th:block th:fragment="nav-content">
+    <th:block th:fragment="nav_content">
         <div th:replace="~{layout :: navbar('inicio')}"></div>
     </th:block>
 
-    <th:block th:fragment="main-content">
+    <th:block th:fragment="main_content">
         <section class="principal container">
             <div class="row align-items-center">
 
