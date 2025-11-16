@@ -92,7 +92,7 @@
 <!-- NAVBAR  -->
 <th:block th:fragment="navbar (activePage)">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
-    <div class="container-fluid">
+    <div class="container">
         <a class="navbar-brand fw-bold" href="/">RUBEN</a>
         <button class="navbar-toggler" type="button" 
             data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -144,12 +144,21 @@
                     </ul>
                 </li>
                 
-                <li class="nav-item"><a class="nav-link" href="#">Viajes</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle"
+                       th:classappend="${activePage == 'viajes'} ? 'active' : ''"
+                       href="#" data-bs-toggle="dropdown">
+                        Viajes
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/viaje">Registrar Viaje</a></li>
+                        <li><a class="dropdown-item" href="/listaViajes">Ver Viajes</a></li>
+                    </ul>
+                </li>
 
             </ul>
         </div>
     </div>
 </nav>
 </th:block>
-
 </html>

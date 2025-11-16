@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout (~{::title}, ~{::head_css}, ~{::nav_content}, ~{::main_content}, ~{::scripts})}">
+
+<head>
+    <title>Registro de Viaje</title>
+    <th:block th:fragment="head_css">
+    </th:block>
+</head>
+
+<body>
+
+    <th:block th:fragment="nav_content">
+        <div th:replace="~{layout :: navbar('viajes')}"></div>
+    </th:block>
+
+    <th:block th:fragment="main_content">
+        
+        <div class="container mt-5 mb-5">
+
+            <h2 class="text-center mb-4">Registro de Viaje</h2>
+
+            <form th:action="@{/guardarViaje}" th:object="${viaje}" method="post" 
+                  class="border rounded p-4 bg-white shadow-sm">
+
+                <input type="hidden" th:field="*{id}"/>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Usuario</label>
+                        <select class="form-select" th:field="*{usuario}">
+                            <option value="">Seleccione un usuario</option>
+                            <option th:each="u : ${usuariosActivos}"
+                                    th:value="${u.id}"
+                                    th:text="${u.nombre + ' ' + u.apellido}">
+                            </option>
+                        </select>
+                        </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Vehículo</label>
+                        <select class="form-select" th:field="*{vehiculo}">
+                            <option value="">Seleccione un vehículo</option>
+                            <option th:each="v : ${vehiculosActivos}"
+                                    th:value="${v.id}"
+                                    th:text="${v.marca + ' ' + v.modelo + ' (' + v.tipo + ')'}">
+                            </option>
+                        </select>
+                        </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label">Tipo de Viaje</label>
+                        <select class="form-select" th:field="*{tipoDistancia}">
+                            <option value="">Seleccione la distancia</option>
+                            <option value="CORTA">Corta distancia</option>
+                            <option value="MEDIA">Media distancia</option>
+                            <option value="LARGA">Larga distancia</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                    <button type="submit" class="btn btn-success btn-lg"> Guardar Viaje
+                    </button>
+                    <a href="/" class="btn btn-secondary btn-lg"> Cancelar
+                    </a>
+                </div>
+
+            </form>
+
+        </div>
+
+    </th:block>
+
+    <th:block th:fragment="scripts"></th:block>
+
+</body>
+</html>

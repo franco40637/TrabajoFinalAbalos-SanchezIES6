@@ -96,20 +96,22 @@
                 
                 <div class="col-md-6">
                     <label class="form-label">Conductor Asignado</label>
-                    <select th:field="*{conductorAsignado}" class="form-select">
-                        <option th:value="null" th:text="'--- SIN ASIGNAR ---'"></option>
-                        
-                        <option th:each="c : ${conductoresDisponibles}" 
-                                th:value="${c.id}" 
-                                th:text="${c.nombre + ' ' + c.apellido + ' (' + c.dni + ')'}">
-                        </option>
-                    </select>
+                    <select th:field="*{conductor}" class="form-select">
+    <option value="" disabled selected>--- Seleccione un Conductor ---</option>
+    
+    <option th:each="c : ${conductoresDisponibles}" 
+            th:value="${c.id}" 
+            th:text="${c.nombre + ' ' + c.apellido + ' (' + c.dni + ')'}"
+            
+            th:disabled="${c.vehiculo != null}"> </option>
+</select>
                 </div>
                 </div>
 
 			<div class="text-center">
-				<button type="submit" class="btn btn-success btn-lg" 
-						th:text="${vehiculo.id > 0 ? 'Actualizar Vehículo' : 'Guardar Vehículo'}"></button>
+    <button type="submit" class="btn btn-success btn-lg">
+        <span th:text="${vehiculo.id > 0 ? 'Actualizar Vehículo' : 'Guardar Vehículo'}">Guardar vehiculo</span>
+    </button>
 				<a href="/" class="btn btn-secondary btn-lg ms-2">Volver al Inicio</a>
 			</div>
 

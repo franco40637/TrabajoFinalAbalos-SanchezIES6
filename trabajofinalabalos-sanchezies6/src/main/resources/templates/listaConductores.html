@@ -41,7 +41,7 @@
                 <td th:text="${conductor.nombre + ' ' + conductor.apellido}"></td>
                 <td th:text="${conductor.licencia}"></td>
                 
-                <td th:text="${conductor.vehiculoAsignado != null ? conductor.vehiculoAsignado.patente + ' (' + conductor.vehiculoAsignado.tipo + ')' : '🚫 No Asignado'}"></td>
+                <td th:text="${conductor.vehiculo != null ? conductor.vehiculo.patente + ' (' + conductor.vehiculo.tipo + ')' : '🚫 No Asignado'}"></td>
                 
                 <td class="text-center">
                     <a th:href="@{/modificarConductor/{id}(id=${conductor.id})}" 

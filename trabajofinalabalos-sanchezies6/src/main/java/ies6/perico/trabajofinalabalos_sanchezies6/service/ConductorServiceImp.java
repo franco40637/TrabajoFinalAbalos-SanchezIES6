@@ -72,14 +72,11 @@ public class ConductorServiceImp implements ConductorService {
         }
     }
     
-    // -------------------------------------------------------------
-    // 1. METODO AÑADIDO PARA SOLUCIONAR EL ERROR DE COMPILACION (Metodo Faltante)
-    // -------------------------------------------------------------
     @Override
     public List<Conductor> listarConductoresActivosSinVehiculo() {
         
         List<Conductor> todosConductoresActivos = conductorRepository.findByActivoTrue();
         
-        return todosConductoresActivos; // Reemplaza esto con la consulta correcta
+        return todosConductoresActivos; 
     }
 }
