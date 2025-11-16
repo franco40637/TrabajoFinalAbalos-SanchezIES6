@@ -6,10 +6,10 @@ import java.util.List;
 
 public interface ConductorRepository extends JpaRepository<Conductor, Integer> {
 
-    // 1. Métodos para la validación en el Service (DNI/Licencia)
+    // 1. Metodos para la validacion en el Service (DNI/Licencia)
     Conductor findByDni(String dni);
     Conductor findByLicencia(String licencia);
 
-    // 2. MÉTODO AÑADIDO PARA SOLUCIONAR EL ERROR 'findByActivoTrue'
+    // 2. 'findByActivoTrue'
     List<Conductor> findByActivoTrue(); 
 }

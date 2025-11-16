@@ -7,63 +7,63 @@ import jakarta.validation.constraints.Pattern;
 @Entity
 public class Conductor {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-	@NotBlank(message = "El DNI es obligatorio")
-	@Pattern(regexp = "^\\d{7,9}$", message = "El DNI debe contener entre 7 y 9 dígitos")
-	@Column(unique = true, nullable = false)
-	private String dni;
+    @NotBlank(message = "El DNI es obligatorio")
+    @Pattern(regexp = "^\\d{7,9}$", message = "El DNI debe contener entre 7 y 9 dígitos")
+    @Column(unique = true, nullable = false)
+    private String dni;
 
-	@NotBlank(message = "El nombre es obligatorio")
-	private String nombre;
+    @NotBlank(message = "El nombre es obligatorio")
+    private String nombre;
 
-	@NotBlank(message = "El apellido es obligatorio")
-	private String apellido;
+    @NotBlank(message = "El apellido es obligatorio")
+    private String apellido;
 
-	@NotBlank(message = "La licencia es obligatoria")
-	@Pattern(regexp = "^[A-Z]{2}\\d{6}$", message = "La Licencia debe tener un formato válido (Ej: AB123456)")
-	@Column(unique = true, nullable = false)
-	private String licencia;
+    @NotBlank(message = "La licencia es obligatoria")
+    @Pattern(regexp = "^[A-Z]{2}\\d{6}$", message = "La Licencia debe tener un formato válido (Ej: AB123456)")
+    @Column(unique = true, nullable = false)
+    private String licencia;
 
-	// RELACIÓN INVERSA (mappedBy) para permitir la lectura del vehículo desde el Conductor
-	@OneToOne(mappedBy = "conductorAsignado", fetch = FetchType.LAZY)
-	private Vehiculo vehiculoAsignado;
+    // Relación inversa correcta
+    @OneToOne(mappedBy = "conductor")
+    private Vehiculo vehiculo;
 
-	private boolean activo = true;
-	
-	// Constructores
-	public Conductor() {}
+    private boolean activo = true;
 
-	public Conductor(String dni, String nombre, String apellido, String licencia) {
-		this.dni = dni;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.licencia = licencia;
-		this.activo = true;
-	}
+    // Constructores
+    public Conductor() {}
 
-	// Getters y Setters
+    public Conductor(String dni, String nombre, String apellido, String licencia) {
+        this.dni = dni;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.licencia = licencia;
+        this.activo = true;
+    }
 
-	public int getId() { return id; }
-	public void setId(int id) { this.id = id; }
+    // Getters y Setters
 
-	public String getDni() { return dni; }
-	public void setDni(String dni) { this.dni = dni; }
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-	public String getNombre() { return nombre; }
-	public void setNombre(String nombre) { this.nombre = nombre; } 
-	
-	public String getApellido() { return apellido; }
-	public void setApellido(String apellido) { this.apellido = apellido; } 
+    public String getDni() { return dni; }
+    public void setDni(String dni) { this.dni = dni; }
 
-	public String getLicencia() { return licencia; }
-	public void setLicencia(String licencia) { this.licencia = licencia; } 
-	
-	public Vehiculo getVehiculoAsignado() { return vehiculoAsignado; }
-	public void setVehiculoAsignado(Vehiculo vehiculoAsignado) { this.vehiculoAsignado = vehiculoAsignado; }
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
 
-	public boolean isActivo() { return activo; }
-	public void setActivo(boolean activo) { this.activo = activo; }
+    public String getApellido() { return apellido; }
+    public void setApellido(String apellido) { this.apellido = apellido; }
+
+    public String getLicencia() { return licencia; }
+    public void setLicencia(String licencia) { this.licencia = licencia; }
+
+    public Vehiculo getVehiculo() { return vehiculo; }
+    public void setVehiculo(Vehiculo vehiculo) { this.vehiculo = vehiculo; }
+
+    public boolean isActivo() { return activo; }
+    public void setActivo(boolean activo) { this.activo = activo; }
 }

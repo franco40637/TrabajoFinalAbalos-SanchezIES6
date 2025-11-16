@@ -6,9 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional; 
 
 @Service
-public class UsuarioServiceImp implements UsuarioService {
+public class UsuarioServiceImp implements UsuarioService { 
 
     @Autowired
     private UsuarioRepository usuarioRepository;
@@ -40,13 +41,11 @@ public class UsuarioServiceImp implements UsuarioService {
         return true;
     }
 
-    // Listar solo los usuarios activos (usando el método en el Repository)
     @Override
-    public List<Usuario> listarUsuarios() {
+    public List<Usuario> listarUsuariosActivos() {
         return usuarioRepository.findByActivoTrue();
     }
 
-    // Eliminar LÓGICAMENTE
     @Override
     public void eliminarUsuarioLogico(int id) {
         Usuario u = usuarioRepository.findById(id).orElse(null);
@@ -60,7 +59,8 @@ public class UsuarioServiceImp implements UsuarioService {
     }
 
     @Override
-    public Usuario buscarPorId(int id) {
-        return usuarioRepository.findById(id).orElse(null);
+    public Optional<Usuario> buscarUsuarioPorId(int id) { 
+        // Usamos el método de JPA que devuelve Optional
+        return usuarioRepository.findById(id); 
     }
 }
