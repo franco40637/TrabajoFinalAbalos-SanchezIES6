@@ -40,7 +40,7 @@ public class Vehiculo {
     // ========================= RELACIÓN 1:1 =========================
 
     @OneToOne
-    @JoinColumn(name = "conductor_id")
+    @JoinColumn(name = "conductor_id", unique = true, nullable = false)
     @NotNull(message = "Debe asignar un conductor.")
     private Conductor conductor;
 
