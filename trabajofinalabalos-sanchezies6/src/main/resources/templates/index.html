@@ -114,6 +114,10 @@
     </th:block>
 
     <th:block th:fragment="main_content">
+        <div th:if="${mensajeExito}" class="alert alert-success text-center mt-4">
+    <span th:text="${mensajeExito}"></span>
+</div>
+
         <section class="principal container">
             <div class="row align-items-center">
 
@@ -128,10 +132,13 @@
                     </p>
 
                     <div class="d-flex gap-3 mb-3">
-                        <div class="text-center p-2 btn-hover">
-                            <i class="bi bi-car-front fs-3"></i>
-                            <div>Viajá</div>
-                        </div>
+                    <div class="text-center p-2 btn-hover">
+                    <!-- El ANCHOR <a> envuelve solo el ícono y el texto para la acción clicable -->
+                     <a href="/viaje" class="text-decoration-none text-dark d-block">
+                       <i class="bi bi-car-front fs-3"></i>
+                    <div>Viajá</div>
+                    </a>
+                   </div>
                         <div class="text-center text-muted p-2 btn-hover">
                             <i class="bi bi-box fs-3"></i>
                             <div>Socio de la app</div>

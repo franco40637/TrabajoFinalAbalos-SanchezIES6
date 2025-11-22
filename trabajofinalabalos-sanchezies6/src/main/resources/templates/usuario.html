@@ -72,9 +72,12 @@
             </div>
 
             <div class="mb-4">
-                <label class="form-label">Teléfono</label>
-                <input type="text" th:field="*{telefono}" class="form-control" placeholder="Ej: 381-1234567">
-                </div>
+            <label class="form-label">Teléfono</label>
+            <input type="text" th:field="*{telefono}" class="form-control" 
+             th:classappend="${#fields.hasErrors('telefono') ? 'is-invalid' : ''}" 
+             placeholder="Ej: 381-1234567">
+            <span th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}" class="text-danger"></span>
+            </div>
             
             <div class="text-center">
                 <button type="submit" class="btn btn-success btn-lg">

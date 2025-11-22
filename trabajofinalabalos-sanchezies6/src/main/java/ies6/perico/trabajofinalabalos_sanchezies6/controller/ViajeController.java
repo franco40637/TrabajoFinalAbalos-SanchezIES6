@@ -13,10 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.Optional;
+import java.util.Collections;
 
 @Controller
 public class ViajeController {
@@ -46,43 +45,34 @@ public class ViajeController {
         return "viaje";
     }
 
-    @GetMapping("/modificarViaje/{id}")
-    public String modificarViaje(@PathVariable("id") int id, Model model) {
-        Optional<Viaje> viajeOptional = viajeService.buscarViajePorId(id);
-
-        if (viajeOptional.isEmpty() || !viajeOptional.get().isActivo()) {
-            return "redirect:/listaViajes";
-        }
-
-        model.addAttribute("viaje", viajeOptional.get());
-        cargarEntidades(model);
-        return "viaje";
-    }
-
     @PostMapping("/guardarViaje")
     public String guardarViaje(
-            @Valid @ModelAttribute Viaje viaje,
+            @Valid @ModelAttribute("viaje") Viaje viaje,
             BindingResult result,
-            Model model
-    ) {
+            Model model) {
+
         if (result.hasErrors()) {
             cargarEntidades(model);
             return "viaje";
         }
 
         viajeService.guardarViaje(viaje);
-        return "redirect:/listaViajes";
+
+        return "redirect:/reciboViaje";
     }
 
-    @GetMapping("/listaViajes")
-    public String listarViajes(Model model) {
-        model.addAttribute("listaViajes", viajeService.listarViajesActivos());
-        return "listaViajes";
-    }
+    @GetMapping("/reciboViaje")
+    public String mostrarRecibo(Model model) {
 
-    @GetMapping("/eliminarViaje/{id}")
-    public String eliminarViaje(@PathVariable("id") int id) {
-        viajeService.eliminarViaje(id);
-        return "redirect:/listaViajes";
+        Viaje viaje = viajeService.buscarUltimoViajeActivo().orElse(null);
+
+        if (viaje == null) {
+            return "redirect:/";
+        }
+
+        model.addAttribute("esRecibo", true);
+        model.addAttribute("reciboViaje", Collections.singletonList(viaje));
+
+        return "reciboViaje";
     }
 }
