@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout (~{::title}, ~{::head_css}, ~{::nav_content}, ~{::main_content}, ~{::scripts})}">
+
+<head>
+    <title>Registro exitoso de viaje</title>
+
+    <th:block th:fragment="head_css">
+        <style>
+            @media print {
+                .no-print { display: none; }
+            }
+
+            .recibo-card {
+                background: #ffffff;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                padding: 25px;
+                max-width: 700px;
+                margin: auto;
+            }
+
+            th {
+                width: 35%;
+                background-color: #f8f9fa;
+            }
+
+            h2 {
+                font-weight: 600;
+                font-size: 1.85rem;
+            }
+        </style>
+    </th:block>
+</head>
+
+<body>
+
+<th:block th:fragment="nav_content">
+    <div th:replace="~{layout :: navbar('viajes')}"></div>
+</th:block>
+
+<th:block th:fragment="main_content">
+
+    <div class="container mt-5 mb-5">
+
+        <h2 class="text-center mb-4">Registro exitoso de viaje</h2>
+
+        <!-- Recorremos la lista con un único viaje -->
+        <th:block th:each="viaje : ${reciboViaje}">
+
+            <div class="recibo-card shadow-sm">
+
+                <table class="table table-bordered mb-4">
+                    <tr>
+                        <th>ID del Viaje</th>
+                        <td th:text="${viaje.id}"></td>
+                    </tr>
+                    <tr>
+                        <th>Usuario</th>
+                        <td th:text="${viaje.usuario.nombre + ' ' + viaje.usuario.apellido}"></td>
+                    </tr>
+                    <tr>
+                        <th>Vehículo</th>
+                        <td th:text="${viaje.vehiculo.marca + ' ' + viaje.vehiculo.modelo}"></td>
+                    </tr>
+                    <tr>
+                        <th>Tipo de Viaje</th>
+                        <td th:text="${viaje.tipoDistancia}"></td>
+                    </tr>
+                    <tr>
+                        <th>Precio Final</th>
+                        <td th:text="'$' + ${#numbers.formatDecimal(viaje.precio, 0, 2)}"></td>
+                    </tr>
+                    <tr>
+                        <th>Conductor</th>
+                        <td th:text="${viaje.vehiculo.conductor.nombre + ' ' + viaje.vehiculo.conductor.apellido}"></td>
+                    </tr>
+                </table>
+
+                <div class="text-center">
+                    <button onclick="window.print()" class="btn btn-primary no-print">Imprimir Recibo</button>
+                </div>
+            </div>
+
+        </th:block>
+
+        <div class="text-center mt-4 no-print">
+            <a href="/viaje" class="btn btn-success btn-lg">Registrar otro Viaje</a>
+            <a href="/" class="btn btn-secondary btn-lg">Volver al Inicio</a>
+        </div>
+
+    </div>
+
+</th:block>
+
+<th:block th:fragment="scripts"></th:block>
+
+</body>
+</html>

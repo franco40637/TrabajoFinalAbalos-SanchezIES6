@@ -9,6 +9,7 @@ import java.util.List;
 @Repository
 public interface ViajeRepository extends JpaRepository<Viaje, Integer> {
     
-    // Método para listar solo los viajes activos
+    // Metodo para listar solo los viajes activos
     List<Viaje> findByActivoTrue();
+    Viaje findTopByActivoTrueOrderByIdDesc();
 }

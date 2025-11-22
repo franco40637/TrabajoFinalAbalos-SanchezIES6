@@ -16,12 +16,14 @@ public class Usuario {
     // No puede estar vacío y min 3, max 50
     @NotBlank(message = "El nombre es obligatorio.")
     @Size(min = 3, max = 50, message = "El nombre debe tener entre 3 y 50 caracteres.")
+    @Pattern(regexp = "^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$", message = "El nombre solo puede contener letras y espacios.")
     @Column(nullable = false)
     private String nombre;
 
     //No puede estar vacío y min 3, max 50
     @NotBlank(message = "El apellido es obligatorio.")
     @Size(min = 3, max = 50, message = "El apellido debe tener entre 3 y 50 caracteres.")
+    @Pattern(regexp = "^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$", message = "El apellido solo puede contener letras y espacios.")
     @Column(nullable = false)
     private String apellido;
 
@@ -36,7 +38,13 @@ public class Usuario {
     @Pattern(regexp = "^\\d{8}$", message = "El DNI debe contener 8 dígitos numéricos.")
     @Column(nullable = false, unique = true)
     private String dni;
-    private String telefono; 
+    
+    // Teléfono Obligatorio
+@NotBlank(message = "El teléfono es obligatorio para la comunicación en el servicio.") // Se requiere valor
+@Size(min = 7, max = 15, message = "El teléfono debe tener entre 7 y 15 caracteres (solo números, espacios, guiones).") 
+@Pattern(regexp = "^[\\d\\s\\(\\)\\-]{7,15}$", message = "Formato de teléfono no válido. Use solo números, espacios, paréntesis o guiones.")
+private String telefono; 
+    
 
     // Eliminación lógica
     private boolean activo = true; 
